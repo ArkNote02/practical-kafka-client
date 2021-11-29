@@ -3,6 +3,10 @@ server:
 management:
   server:
     port: 8081
+logging:
+  level:
+    root: INFO
+    com.github.jiantailang: INFO
 spring:
   main:
     banner-mode: off
@@ -17,7 +21,9 @@ spring:
       ack: all
       properties:
         partitioner.class: com.github.jiantailang.kafka.adapters.publisher.AvoidOfflinePartitioner
-        spring.json.add.type.headers: false
+        #spring.json.add.type.headers: false
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
     consumer:
       bootstrap-servers:
         - localhost:19092
@@ -33,5 +39,5 @@ spring:
         partition.assignment.strategy: org.apache.kafka.clients.consumer.StickyAssignor
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
         #spring.deserializer.value.function: ? implements Function<FailedDeserializationInfo, T>
-        spring.json.value.default.type: com.github.jiantailang.kafka.adapters.subscriber.Message
-        spring.json.trusted.packages: com.github.jiantailang.kafka.adapters.subscriber
+        spring.json.value.default.type: com.github.jiantailang.messages.DataForMessage
+        spring.json.trusted.packages: com.github.jiantailang.messages
